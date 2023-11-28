@@ -4,7 +4,9 @@
     <string name="title_drink_categories">Categories</string>
     <string name="title_favorite_drinks">Favorites</string>
     <string name="title_instructions">Instructions</string>
-    <string name="more">More...</string>
+    <string name="more">More…</string>
+    <string name="title_search">Cocktail Search</string>
+
     <string name="add_ingredient">Add Ingredient</string>
     <string name="navigate_back">Navigate back</string>
     <string name="no_results_found">No results found</string>

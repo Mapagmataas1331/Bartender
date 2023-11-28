@@ -34,156 +34,156 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @Composable
 fun AddIngredientScreen(
-    scaffoldState: BottomSheetScaffoldState,
-    viewModel: AddIngredientViewModel = hiltViewModel()
+  scaffoldState: BottomSheetScaffoldState,
+  viewModel: AddIngredientViewModel = hiltViewModel()
 ) {
 
-    val focusManager = LocalFocusManager.current
-    val state = viewModel.screenState.value
-    val ingredients = viewModel.results
-    val query = viewModel.query
-    val textState = remember { mutableStateOf(TextFieldValue()) }
-    val coroutineScope = rememberCoroutineScope()
+  val focusManager = LocalFocusManager.current
+  val state = viewModel.screenState.value
+  val ingredients = viewModel.results
+  val query = viewModel.query
+  val textState = remember { mutableStateOf(TextFieldValue()) }
+  val coroutineScope = rememberCoroutineScope()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            coroutineScope.launch {
-                                when {
-                                    scaffoldState.bottomSheetState.isCollapsed -> scaffoldState.bottomSheetState.expand()
-                                    scaffoldState.bottomSheetState.isExpanded -> scaffoldState.bottomSheetState.collapse()
-                                }
-                            }
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Outlined.Add,
-                            contentDescription = "expand"
-                        )
-                    }
-                },
-                title = {
-                    Text(
-                        text = stringResource(id = R.string.add_new_ingredient),
-                        fontWeight = FontWeight.Medium
-                    )
+  Scaffold(
+    topBar = {
+      TopAppBar(
+        navigationIcon = {
+          IconButton(
+            onClick = {
+              coroutineScope.launch {
+                when {
+                  scaffoldState.bottomSheetState.isCollapsed -> scaffoldState.bottomSheetState.expand()
+                  scaffoldState.bottomSheetState.isExpanded -> scaffoldState.bottomSheetState.collapse()
                 }
+              }
+            }
+          ) {
+            Icon(
+              imageVector = Icons.Outlined.Add,
+              contentDescription = "expand"
             )
+          }
+        },
+        title = {
+          Text(
+            text = stringResource(id = R.string.add_new_ingredient),
+            fontWeight = FontWeight.Medium
+          )
         }
-    ) {
-
-        Column {
-            Row(Modifier.fillMaxWidth()) {
-                OutlinedTextField(
-                    value = textState.value,
-                    onValueChange = {
-                        textState.value = it
-                        query.value = it.text
-                    },
-                    trailingIcon = {
-                        IconButton(
-                            onClick = {
-                                textState.value = TextFieldValue()
-                                query.value = ""
-                            }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Clear,
-                                contentDescription = stringResource(id = R.string.clear_filter)
-                            )
-                        }
-                    },
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {
-                            focusManager.clearFocus()
-                        }
-                    ),
-                    keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
-                    label = {
-                        Text(stringResource(id = R.string.type_to_filter))
-                    }
-                )
-            }
-
-
-            when (state) {
-                AddIngredientSearchState.Initial -> {
-                }
-                AddIngredientSearchState.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        CircularProgressIndicator()
-                    }
-                }
-                AddIngredientSearchState.Success -> {
-                    IngredientsList(ingredients.value) {
-                        viewModel.addIngredient(it)
-                        coroutineScope.launch {
-                            val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
-                                message = "Ingredient added",
-                                actionLabel = "Undo"
-                            )
-
-                            when (snackbarResult) {
-                                SnackbarResult.ActionPerformed -> {
-                                    viewModel.removeIngredient(it)
-                                }
-                                else -> {}
-                            }
-                        }
-                    }
-                }
-                AddIngredientSearchState.Fail -> {
-
-                }
-                AddIngredientSearchState.Empty -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Row {
-                            Icon(
-                                imageVector = Icons.Default.SentimentDissatisfied,
-                                contentDescription = null
-                            )
-                            Text(stringResource(id = R.string.no_results_found))
-                        }
-                    }
-                }
-            }
-        }
+      )
     }
+  ) {
+
+    Column {
+      Row(Modifier.fillMaxWidth()) {
+        OutlinedTextField(
+          value = textState.value,
+          onValueChange = {
+            textState.value = it
+            query.value = it.text
+          },
+          trailingIcon = {
+            IconButton(
+              onClick = {
+                textState.value = TextFieldValue()
+                query.value = ""
+              }
+            ) {
+              Icon(
+                imageVector = Icons.Default.Clear,
+                contentDescription = stringResource(id = R.string.clear_filter)
+              )
+            }
+          },
+          modifier = Modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+          keyboardActions = KeyboardActions(
+            onSearch = {
+              focusManager.clearFocus()
+            }
+          ),
+          keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+          label = {
+            Text(stringResource(id = R.string.type_to_filter))
+          }
+        )
+      }
+
+
+      when (state) {
+        AddIngredientSearchState.Initial -> {
+        }
+        AddIngredientSearchState.Loading -> {
+          Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+          }
+        }
+        AddIngredientSearchState.Success -> {
+          IngredientsList(ingredients.value) {
+            viewModel.addIngredient(it)
+            coroutineScope.launch {
+              val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+                message = "Ingredient added",
+                actionLabel = "Undo"
+              )
+
+              when (snackbarResult) {
+                SnackbarResult.ActionPerformed -> {
+                  viewModel.removeIngredient(it)
+                }
+                else -> {}
+              }
+            }
+          }
+        }
+        AddIngredientSearchState.Fail -> {
+
+        }
+        AddIngredientSearchState.Empty -> {
+          Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Row {
+              Icon(
+                imageVector = Icons.Default.SentimentDissatisfied,
+                contentDescription = null
+              )
+              Text(stringResource(id = R.string.no_results_found))
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @Composable
 fun IngredientsList(
-    ingredients: List<LocalIngredient>,
-    onAddIngredient: (LocalIngredient) -> Unit
+  ingredients: List<LocalIngredient>,
+  onAddIngredient: (LocalIngredient) -> Unit
 ) {
-    LazyColumn {
-        items(ingredients) {
-            AddIngredientListItem(ingredient = it, onAddIngredient = onAddIngredient)
-        }
+  LazyColumn {
+    items(ingredients) {
+      AddIngredientListItem(ingredient = it, onAddIngredient = onAddIngredient)
     }
+  }
 }
 
 @Composable
 fun AddIngredientListItem(ingredient: LocalIngredient, onAddIngredient: (LocalIngredient) -> Unit) {
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .clickable {
-                onAddIngredient(ingredient)
-            }
-    ) {
-        Text(
-            ingredient.name,
-            fontWeight = FontWeight.Medium,
-            fontSize = 16.sp,
-            modifier = Modifier.padding(12.dp)
-        )
-        Divider()
-    }
+  Column(
+    Modifier
+      .fillMaxWidth()
+      .clickable {
+        onAddIngredient(ingredient)
+      }
+  ) {
+    Text(
+      ingredient.name,
+      fontWeight = FontWeight.Medium,
+      fontSize = 16.sp,
+      modifier = Modifier.padding(12.dp)
+    )
+    Divider()
+  }
 }
