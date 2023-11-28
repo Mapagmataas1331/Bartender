@@ -11,7 +11,7 @@ interface CocktailApi {
   @GET("api/json/v2/1/search.php")
   suspend fun getSearchResults(
     @Query("s") query: String
-  ): Response<DrinksResponse>
+  ): Response<CardDrinkResponse>
 
   @GET("api/json/v2/1/list.php?c=list")
   suspend fun getCategories(): Response<CategoriesResponse>
@@ -27,5 +27,5 @@ interface CocktailApi {
   @GET("api/json/v2/1/filter.php?i=Dry_Vermouth,Gin,Anis")
   suspend fun getDrinksWithMixers(
     @Query("i") mixers: String
-  ): Response<MixerDrinkResponse>
+  ): Response<CardDrinkResponse>
 }

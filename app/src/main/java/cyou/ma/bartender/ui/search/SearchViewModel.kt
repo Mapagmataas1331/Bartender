@@ -2,7 +2,7 @@ package cyou.ma.bartender.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cyou.ma.bartender.api.model.Drink
+import cyou.ma.bartender.api.model.CardDrink
 import cyou.ma.bartender.repo.SearchRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +16,8 @@ class SearchViewModel @Inject constructor(private val searchRepo: SearchRepo) :
 
   private val _searchState = MutableStateFlow(SearchScreenSearchState.Initial)
 
-  private val _cocktails = MutableStateFlow<List<Drink>>(emptyList())
-  val cocktails: StateFlow<List<Drink>> = _cocktails
+  private val _cocktails = MutableStateFlow<List<CardDrink>>(emptyList())
+  val cocktails: StateFlow<List<CardDrink>> = _cocktails
 
   fun searchCocktails(query: String) {
 //    Log.i("search", "searchCocktails: $query")

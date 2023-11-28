@@ -20,15 +20,15 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cyou.ma.bartender.R
-import cyou.ma.bartender.api.model.Drink
+import cyou.ma.bartender.api.model.CardDrink
 
 @Composable
 fun SearchScreenListing(onDrinkClicked: (String) -> Unit, viewModel: SearchViewModel = hiltViewModel()) {
-  val context = LocalContext.current
+  LocalContext.current
   val focusManager = LocalFocusManager.current
 
   val cocktailsState by viewModel.cocktails.collectAsState(emptyList())
-  val cocktails: List<Drink> = cocktailsState
+  val cocktails: List<CardDrink> = cocktailsState
   val queryState = remember { mutableStateOf("") }
 
   Column {
@@ -65,14 +65,14 @@ fun SearchScreenListing(onDrinkClicked: (String) -> Unit, viewModel: SearchViewM
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun CocktailList(cocktails: List<Drink>, onDrinkClicked: (String) -> Unit) {
+fun CocktailList(cocktails: List<CardDrink>, onDrinkClicked: (String) -> Unit) {
   LazyColumn {
     items(cocktails) { cocktail ->
       ListItem(
-        text = { Text(text = cocktail.drink) },
+        text = { Text(text = cocktail.name) },
         modifier = Modifier
           .fillMaxWidth()
-          .clickable { onDrinkClicked(cocktail.idDrink) }
+          .clickable { onDrinkClicked(cocktail.id) }
           .padding(horizontal = 16.dp, vertical = 8.dp)
       )
     }

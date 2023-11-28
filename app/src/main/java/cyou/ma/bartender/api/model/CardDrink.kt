@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class MixerDrink(
+data class CardDrink(
   @Json(name = "strDrink")
   val name: String,
   @Json(name = "strDrinkThumb")

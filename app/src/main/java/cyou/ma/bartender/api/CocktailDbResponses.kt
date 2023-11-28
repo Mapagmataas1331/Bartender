@@ -2,7 +2,7 @@ package cyou.ma.bartender.api
 
 import cyou.ma.bartender.api.model.Drink
 import cyou.ma.bartender.api.model.Ingredient
-import cyou.ma.bartender.api.model.MixerDrink
+import cyou.ma.bartender.api.model.CardDrink
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -19,7 +19,7 @@ data class IngredientsResponse(
 )
 
 @JsonClass(generateAdapter = true)
-data class MixerDrinkResponse(
+data class CardDrinkResponse(
   @Json(name = "drinks")
-  val drinks: List<MixerDrink>
+  val drinks: List<CardDrink>
 )

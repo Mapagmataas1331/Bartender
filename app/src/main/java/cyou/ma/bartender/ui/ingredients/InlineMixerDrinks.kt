@@ -24,16 +24,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cyou.ma.bartender.R
-import cyou.ma.bartender.api.model.MixerDrink
+import cyou.ma.bartender.api.model.CardDrink
 import cyou.ma.bartender.ui.cocktailDetail.TagChip
 import com.google.accompanist.coil.rememberCoilPainter
 
 @ExperimentalAnimationApi
 @Composable
 fun InlineMixerDrinks(
-  foundMixers: List<MixerDrink>,
+  foundMixers: List<CardDrink>,
   selectedMixers: Set<String>,
-  onMixerDrinkClicked: (MixerDrink) -> Unit
+  onMixerDrinkClicked: (CardDrink) -> Unit
 ) {
   AnimatedVisibility(
     visible = foundMixers.isNotEmpty() && selectedMixers.isNotEmpty(),
@@ -42,7 +42,7 @@ fun InlineMixerDrinks(
   ) {
     LazyRow(Modifier.fillMaxWidth()) {
       items(foundMixers) {
-        InlineMixerDrinkCard(mixerDrink = it, onMixerDrinkClicked)
+        InlineMixerDrinkCard(cardDrink = it, onMixerDrinkClicked)
       }
     }
   }
@@ -50,21 +50,21 @@ fun InlineMixerDrinks(
 
 
 @Composable
-fun InlineMixerDrinkCard(mixerDrink: MixerDrink, onMixerDrinkClicked: (MixerDrink) -> Unit) {
-  val painter = rememberCoilPainter(request = mixerDrink.thumbnail)
+fun InlineMixerDrinkCard(cardDrink: CardDrink, onMixerDrinkClicked: (CardDrink) -> Unit) {
+  val painter = rememberCoilPainter(request = cardDrink.thumbnail)
 
   Surface(
     modifier = Modifier
       .padding(12.dp)
       .size(80.dp)
       .clickable {
-        onMixerDrinkClicked(mixerDrink)
+        onMixerDrinkClicked(cardDrink)
       },
     shape = RoundedCornerShape(8.dp)
   ) {
     Image(
       painter = painter,
-      contentDescription = mixerDrink.name,
+      contentDescription = cardDrink.name,
       contentScale = ContentScale.Crop
     )
   }

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cyou.ma.bartender.R
-import cyou.ma.bartender.api.model.MixerDrink
+import cyou.ma.bartender.api.model.CardDrink
 import cyou.ma.bartender.database.userIngredient.UserIngredient
 import cyou.ma.bartender.ui.addIngredient.AddIngredientScreen
 import kotlinx.coroutines.FlowPreview
@@ -81,7 +81,7 @@ fun UserIngredientsListScreen(
   viewModel: IngredientsViewModel,
   paddingValues: PaddingValues,
   onAddNewIngredient: () -> Unit,
-  onNavigateToDrinkDetail: (MixerDrink) -> Unit
+  onNavigateToDrinkDetail: (CardDrink) -> Unit
 ) {
   val state = viewModel.screenState
   val mixerItems = viewModel.selectedMixers
