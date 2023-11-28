@@ -8,18 +8,18 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DrinksResponse(
-    @Json(name = "drinks")
-    val drinks: List<Drink>
+  @Json(name = "drinks")
+  val drinks: List<Drink>
 )
 
 @JsonClass(generateAdapter = true)
 data class IngredientsResponse(
-    @Json(name = "drinks")
-    val ingredients: List<Ingredient>
+  @Json(name = "drinks")
+  val ingredients: List<Ingredient>
 )
 
 @JsonClass(generateAdapter = true)
 data class MixerDrinkResponse(
-    @Json(name = "drinks")
-    val drinks: List<MixerDrink>
+  @Json(name = "drinks")
+  val drinks: List<MixerDrink>
 )

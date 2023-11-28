@@ -15,66 +15,66 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IngredientsViewModel @Inject constructor(
-    private val ingredientsRepo: IngredientsRepo,
-    private val searchRepo: SearchRepo
+  private val ingredientsRepo: IngredientsRepo,
+  private val searchRepo: SearchRepo
 ) : ViewModel() {
 
-    val screenState = mutableStateOf<IngredientsListScreenState>(IngredientsListScreenState.Loading)
-    val selectedMixers = mutableStateOf(mutableSetOf<String>())
-    val foundMixers = mutableStateOf(listOf<MixerDrink>())
+  val screenState = mutableStateOf<IngredientsListScreenState>(IngredientsListScreenState.Loading)
+  val selectedMixers = mutableStateOf(mutableSetOf<String>())
+  val foundMixers = mutableStateOf(listOf<MixerDrink>())
 
-    init {
-        viewModelScope.launch {
-            ingredientsRepo.userIngredientsFlow
-                .distinctUntilChanged()
-                .collect {
-                    val state =
-                        if (it.isEmpty()) IngredientsListScreenState.Empty else IngredientsListScreenState.Success(
-                            it
-                        )
-                    screenState.value = state
-                }
+  init {
+    viewModelScope.launch {
+      ingredientsRepo.userIngredientsFlow
+        .distinctUntilChanged()
+        .collect {
+          val state =
+            if (it.isEmpty()) IngredientsListScreenState.Empty else IngredientsListScreenState.Success(
+              it
+            )
+          screenState.value = state
         }
     }
+  }
 
-    fun removeIngredient(removeIngredient: UserIngredient) = viewModelScope.launch {
-        ingredientsRepo.deleteIngredient(removeIngredient)
-    }
+  fun removeIngredient(removeIngredient: UserIngredient) = viewModelScope.launch {
+    ingredientsRepo.deleteIngredient(removeIngredient)
+  }
 
-    fun addMixer(ingredient: UserIngredient) {
-        val updated = selectedMixers.value.toMutableSet().apply {
-            add(ingredient.name)
-        }
-        selectedMixers.value = updated
-        getDrinksForMixers()
+  fun addMixer(ingredient: UserIngredient) {
+    val updated = selectedMixers.value.toMutableSet().apply {
+      add(ingredient.name)
     }
+    selectedMixers.value = updated
+    getDrinksForMixers()
+  }
 
-    fun removeMixer(mixer: String) {
-        val updated = selectedMixers.value.toMutableSet().apply {
-            remove(mixer)
-        }
-        selectedMixers.value = updated
-        // clear out
-        if (updated.isEmpty()) {
-            foundMixers.value = emptyList()
-        } else {
-            getDrinksForMixers()
-        }
+  fun removeMixer(mixer: String) {
+    val updated = selectedMixers.value.toMutableSet().apply {
+      remove(mixer)
     }
+    selectedMixers.value = updated
+    // clear out
+    if (updated.isEmpty()) {
+      foundMixers.value = emptyList()
+    } else {
+      getDrinksForMixers()
+    }
+  }
 
-    fun getDrinksForMixers() = viewModelScope.launch {
-        searchRepo.getDrinksForMixers(selectedMixers.value).fold(
-            {
-                foundMixers.value = it
-            },
-            {
-                it.printStackTrace()
-            }
-        )
-    }
+  fun getDrinksForMixers() = viewModelScope.launch {
+    searchRepo.getDrinksForMixers(selectedMixers.value).fold(
+      {
+        foundMixers.value = it
+      },
+      {
+        it.printStackTrace()
+      }
+    )
+  }
 
-    fun clearMixers() {
-        selectedMixers.value = mutableSetOf()
-        foundMixers.value = mutableListOf()
-    }
+  fun clearMixers() {
+    selectedMixers.value = mutableSetOf()
+    foundMixers.value = mutableListOf()
+  }
 }

@@ -7,9 +7,9 @@ import cyou.ma.bartender.database.userIngredient.UserIngredient
 
 @Entity
 data class LocalIngredient(
-    @PrimaryKey
-    @ColumnInfo(name = "name")
-    val name: String
+  @PrimaryKey
+  @ColumnInfo(name = "name")
+  val name: String
 ) {
-    fun toUserIngredient() = UserIngredient(name = this.name)
+  fun toUserIngredient() = UserIngredient(name = this.name)
 }

@@ -13,25 +13,25 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-    @Singleton
-    @Provides
-    fun provideDatabase(@ApplicationContext app: Context) =
-        Room.databaseBuilder(
-            app,
-            AppDatabase::class.java,
-            "tail_db"
-        ).fallbackToDestructiveMigration().build()
+  @Singleton
+  @Provides
+  fun provideDatabase(@ApplicationContext app: Context) =
+    Room.databaseBuilder(
+      app,
+      AppDatabase::class.java,
+      "tail_db"
+    ).fallbackToDestructiveMigration().build()
 
 
-    @Singleton
-    @Provides
-    fun provideFavoriteDrinkDao(database: AppDatabase) = database.getFavoriteDrinksDao()
+  @Singleton
+  @Provides
+  fun provideFavoriteDrinkDao(database: AppDatabase) = database.getFavoriteDrinksDao()
 
-    @Singleton
-    @Provides
-    fun provideLocalIngredientsDao(database: AppDatabase) = database.getLocalIngredientsDao()
+  @Singleton
+  @Provides
+  fun provideLocalIngredientsDao(database: AppDatabase) = database.getLocalIngredientsDao()
 
-    @Singleton
-    @Provides
-    fun provideUserIngredientsDao(database: AppDatabase) = database.getUserIngredientsDao()
+  @Singleton
+  @Provides
+  fun provideUserIngredientsDao(database: AppDatabase) = database.getUserIngredientsDao()
 }

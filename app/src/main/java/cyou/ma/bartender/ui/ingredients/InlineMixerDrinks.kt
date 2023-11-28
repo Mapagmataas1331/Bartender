@@ -31,94 +31,94 @@ import com.google.accompanist.coil.rememberCoilPainter
 @ExperimentalAnimationApi
 @Composable
 fun InlineMixerDrinks(
-    foundMixers: List<MixerDrink>,
-    selectedMixers: Set<String>,
-    onMixerDrinkClicked: (MixerDrink) -> Unit
+  foundMixers: List<MixerDrink>,
+  selectedMixers: Set<String>,
+  onMixerDrinkClicked: (MixerDrink) -> Unit
 ) {
-    AnimatedVisibility(
-        visible = foundMixers.isNotEmpty() && selectedMixers.isNotEmpty(),
-        enter = expandVertically(),
-        exit = shrinkVertically()
-    ) {
-        LazyRow(Modifier.fillMaxWidth()) {
-            items(foundMixers) {
-                InlineMixerDrinkCard(mixerDrink = it, onMixerDrinkClicked)
-            }
-        }
+  AnimatedVisibility(
+    visible = foundMixers.isNotEmpty() && selectedMixers.isNotEmpty(),
+    enter = expandVertically(),
+    exit = shrinkVertically()
+  ) {
+    LazyRow(Modifier.fillMaxWidth()) {
+      items(foundMixers) {
+        InlineMixerDrinkCard(mixerDrink = it, onMixerDrinkClicked)
+      }
     }
+  }
 }
 
 
 @Composable
 fun InlineMixerDrinkCard(mixerDrink: MixerDrink, onMixerDrinkClicked: (MixerDrink) -> Unit) {
-    val painter = rememberCoilPainter(request = mixerDrink.thumbnail)
+  val painter = rememberCoilPainter(request = mixerDrink.thumbnail)
 
-    Surface(
-        modifier = Modifier
-            .padding(12.dp)
-            .size(80.dp)
-            .clickable {
-                onMixerDrinkClicked(mixerDrink)
-            },
-        shape = RoundedCornerShape(8.dp)
-    ) {
-        Image(
-            painter = painter,
-            contentDescription = mixerDrink.name,
-            contentScale = ContentScale.Crop
-        )
-    }
+  Surface(
+    modifier = Modifier
+      .padding(12.dp)
+      .size(80.dp)
+      .clickable {
+        onMixerDrinkClicked(mixerDrink)
+      },
+    shape = RoundedCornerShape(8.dp)
+  ) {
+    Image(
+      painter = painter,
+      contentDescription = mixerDrink.name,
+      contentScale = ContentScale.Crop
+    )
+  }
 }
 
 @ExperimentalAnimationApi
 @Composable
 fun MixerChipGroup(
-    mixers: Set<String>,
-    onRemoveMixer: (String) -> Unit,
-    onClearMixers: () -> Unit
+  mixers: Set<String>,
+  onRemoveMixer: (String) -> Unit,
+  onClearMixers: () -> Unit
 ) {
-    AnimatedVisibility(
-        visible = mixers.isNotEmpty(),
-        enter = expandVertically(),
-        exit = shrinkVertically()
-    ) {
-        Column(Modifier.padding(start = 16.dp)) {
-            Text(
-                stringResource(id = R.string.mixer_search),
-                fontWeight = FontWeight.Black,
-                modifier = Modifier.padding(top = 12.dp)
+  AnimatedVisibility(
+    visible = mixers.isNotEmpty(),
+    enter = expandVertically(),
+    exit = shrinkVertically()
+  ) {
+    Column(Modifier.padding(start = 16.dp)) {
+      Text(
+        stringResource(id = R.string.mixer_search),
+        fontWeight = FontWeight.Black,
+        modifier = Modifier.padding(top = 12.dp)
+      )
+      Row(
+        Modifier
+          .fillMaxWidth()
+          .padding(top = 8.dp, bottom = 8.dp, end = 8.dp)
+      ) {
+
+        LazyRow(
+          Modifier
+            .weight(1f)
+            .align(Alignment.CenterVertically)
+        ) {
+          items(mixers.toList()) {
+            TagChip(
+              text = it,
+              modifier = Modifier.clickable {
+                onRemoveMixer(it)
+              }
             )
-            Row(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp, bottom = 8.dp, end = 8.dp)
-            ) {
-
-                LazyRow(
-                    Modifier
-                        .weight(1f)
-                        .align(Alignment.CenterVertically)
-                ) {
-                    items(mixers.toList()) {
-                        TagChip(
-                            text = it,
-                            modifier = Modifier.clickable {
-                                onRemoveMixer(it)
-                            }
-                        )
-                        Spacer(Modifier.padding(4.dp))
-                    }
-                }
-                IconButton(
-                    onClick = {
-                        onClearMixers()
-                    },
-                    modifier = Modifier.padding(end = 16.dp)
-                ) {
-                    Icon(imageVector = Icons.Default.Close, null)
-                }
-            }
+            Spacer(Modifier.padding(4.dp))
+          }
         }
-
+        IconButton(
+          onClick = {
+            onClearMixers()
+          },
+          modifier = Modifier.padding(end = 16.dp)
+        ) {
+          Icon(imageVector = Icons.Default.Close, null)
+        }
+      }
     }
+
+  }
 }

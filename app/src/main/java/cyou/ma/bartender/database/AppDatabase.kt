@@ -10,12 +10,12 @@ import cyou.ma.bartender.database.userIngredient.UserIngredient
 import cyou.ma.bartender.database.userIngredient.UserIngredientDao
 
 @Database(
-    entities = [FavoriteDrink::class, LocalIngredient::class, UserIngredient::class],
-    version = 4,
-    exportSchema = true
+  entities = [FavoriteDrink::class, LocalIngredient::class, UserIngredient::class],
+  version = 4,
+  exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun getFavoriteDrinksDao(): FavoriteDrinkDao
-    abstract fun getLocalIngredientsDao(): LocalIngredientDao
-    abstract fun getUserIngredientsDao(): UserIngredientDao
+  abstract fun getFavoriteDrinksDao(): FavoriteDrinkDao
+  abstract fun getLocalIngredientsDao(): LocalIngredientDao
+  abstract fun getUserIngredientsDao(): UserIngredientDao
 }

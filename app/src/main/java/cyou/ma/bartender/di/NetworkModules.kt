@@ -20,29 +20,29 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModules {
 
-    @Singleton
-    @Provides
-    fun provideCocktailDbApi(): CocktailApi {
-        return Retrofit.Builder()
-            .baseUrl("https://www.thecocktaildb.com/")
-            .addConverterFactory(MoshiConverterFactory.create())
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
-            .create(CocktailApi::class.java)
-    }
+  @Singleton
+  @Provides
+  fun provideCocktailDbApi(): CocktailApi {
+    return Retrofit.Builder()
+      .baseUrl("https://www.thecocktaildb.com/")
+      .addConverterFactory(MoshiConverterFactory.create())
+      .addConverterFactory(ScalarsConverterFactory.create())
+      .build()
+      .create(CocktailApi::class.java)
+  }
 
-    @Singleton
-    @Provides
-    fun provideSearchRepo(api: CocktailApi): SearchRepo {
-        return SearchRepoImp(api)
-    }
+  @Singleton
+  @Provides
+  fun provideSearchRepo(api: CocktailApi): SearchRepo {
+    return SearchRepoImp(api)
+  }
 
-    @Singleton
-    @Provides
-    fun provideIngredientRepo(
-        api: CocktailApi,
-        localIngredientDao: LocalIngredientDao,
-        userIngredientDao: UserIngredientDao
-    ): IngredientsRepo = IngredientsRepoImp(api, localIngredientDao, userIngredientDao)
+  @Singleton
+  @Provides
+  fun provideIngredientRepo(
+    api: CocktailApi,
+    localIngredientDao: LocalIngredientDao,
+    userIngredientDao: UserIngredientDao
+  ): IngredientsRepo = IngredientsRepoImp(api, localIngredientDao, userIngredientDao)
 }
 

@@ -10,22 +10,22 @@ import androidx.compose.ui.unit.sp
 import cyou.ma.bartender.R
 
 val ralewayFontFamily = FontFamily(
-    Font(R.font.raleway_black, FontWeight.Black),
-    Font(R.font.raleway_bold, FontWeight.Bold),
-    Font(R.font.raleway_italic, FontWeight.Normal, FontStyle.Italic),
-    Font(R.font.raleway_medium, FontWeight.Medium),
-    Font(R.font.raleway_regular, FontWeight.Normal)
+  Font(R.font.raleway_black, FontWeight.Black),
+  Font(R.font.raleway_bold, FontWeight.Bold),
+  Font(R.font.raleway_italic, FontWeight.Normal, FontStyle.Italic),
+  Font(R.font.raleway_medium, FontWeight.Medium),
+  Font(R.font.raleway_regular, FontWeight.Normal)
 )
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-    body1 = TextStyle(
-        fontWeight = FontWeight.Medium,
-        fontSize = 16.sp
-    ),
-    caption = TextStyle(
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    ),
-    defaultFontFamily = ralewayFontFamily
+  body1 = TextStyle(
+    fontWeight = FontWeight.Medium,
+    fontSize = 16.sp
+  ),
+  caption = TextStyle(
+    fontWeight = FontWeight.Normal,
+    fontSize = 12.sp
+  ),
+  defaultFontFamily = ralewayFontFamily
 )

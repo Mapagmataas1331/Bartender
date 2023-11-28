@@ -18,39 +18,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val searchRepo: SearchRepo,
-    private val favoriteDrinkDao: FavoriteDrinkDao
+  private val searchRepo: SearchRepo,
+  favoriteDrinkDao: FavoriteDrinkDao
 ) : ViewModel() {
-    val popularItems = mutableStateOf(emptyList<Drink>())
-    val popularItemsState = mutableStateOf<AsyncState<Unit>>(Loading)
+  val popularItems = mutableStateOf(emptyList<Drink>())
+  val popularItemsState = mutableStateOf<AsyncState<Unit>>(Loading)
 
-    val drinkCategories = mutableStateOf(emptyList<Category>())
+  val drinkCategories = mutableStateOf(emptyList<Category>())
 
-    val favoriteDrinks = favoriteDrinkDao.getFavorites().distinctUntilChanged()
+  val favoriteDrinks = favoriteDrinkDao.getFavorites().distinctUntilChanged()
 
-    init {
-        getPopularDrinks()
-        getCategories()
+  init {
+    getPopularDrinks()
+    getCategories()
+  }
+
+  fun getPopularDrinks() = viewModelScope.launch {
+    searchRepo.getPopularCocktails().fold(
+      {
+        popularItems.value = it
+        popularItemsState.value = Success(Unit)
+      },
+      {
+        popularItemsState.value = Fail(it)
+      }
+    )
+  }
+
+  fun getCategories() = viewModelScope.launch {
+    searchRepo.getCategories().onSuccess {
+      drinkCategories.value = it
+    }.onFailure {
+      it.printStackTrace()
     }
-
-    fun getPopularDrinks() = viewModelScope.launch {
-        searchRepo.getPopularCocktails().fold(
-            {
-                popularItems.value = it
-                popularItemsState.value = Success(Unit)
-            },
-            {
-                popularItemsState.value = Fail(it)
-            }
-        )
-    }
-
-    fun getCategories() = viewModelScope.launch {
-        searchRepo.getCategories().onSuccess {
-            drinkCategories.value = it
-        }.onFailure {
-            it.printStackTrace()
-        }
-    }
+  }
 
 }

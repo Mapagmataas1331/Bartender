@@ -73,7 +73,7 @@ fun AddIngredientScreen(
         }
       )
     }
-  ) {
+  ) { padding ->
 
     Column {
       Row(Modifier.fillMaxWidth()) {

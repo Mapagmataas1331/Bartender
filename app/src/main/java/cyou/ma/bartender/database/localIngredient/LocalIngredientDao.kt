@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface LocalIngredientDao {
-    @Query("SELECT * FROM LOCALINGREDIENT ORDER BY name")
-    fun getIngredients(): Flow<List<LocalIngredient>>
+  @Query("SELECT * FROM LOCALINGREDIENT ORDER BY name")
+  fun getIngredients(): Flow<List<LocalIngredient>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllIngredients(localIngredients: List<LocalIngredient>)
+  @Insert(onConflict = OnConflictStrategy.REPLACE)
+  suspend fun insertAllIngredients(localIngredients: List<LocalIngredient>)
 
-    @Query("DELETE FROM LOCALINGREDIENT")
-    suspend fun deleteAllIngredients()
+  @Query("DELETE FROM LOCALINGREDIENT")
+  suspend fun deleteAllIngredients()
 }
